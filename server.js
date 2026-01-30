@@ -4,7 +4,13 @@ const axios = require('axios');
 const app = express();
 app.use(express.json());
 
-app.post('/', async (req, res) => {
+// ✅ Health check (GET)
+app.get("/", (req, res) => {
+  res.status(200).send("OK");
+});
+
+// ✅ GloriaFood webhook (POST)
+app.post("/", async (req, res) => {
   const order = req.body;
 
   try {
@@ -34,4 +40,8 @@ app.post('/', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Server running"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
+});
+
